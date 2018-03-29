@@ -1,0 +1,31 @@
+{
+    "data": {
+        "patientName": "张三",
+        "patientAge": "3岁",
+        "studyDate": "2011-11-30",
+        "deviceType": "眼底照相机",
+        "series": [{
+            "seriesName" : "OS",
+            "images": [{
+                "thumbnail": "cateyes/test1.jpg",
+                "src": "cateyes/test1.jpg"
+            },{
+                "thumbnail": "cateyes/test2.jpg",
+                "src": "cateyes/test2.jpg"
+            },{
+                "thumbnail": "cateyes/test3.jpg",
+                "src": "cateyes/test3.jpg"
+            }]
+        },{
+            "seriesName" : "OD",
+            "images": [{
+                "thumbnail": "cateyes/test4.jpg",
+                "src": "cateyes/test4.jpg"
+            },{
+                "thumbnail": "cateyes/test5.jpg",
+                "src": "cateyes/test5.jpg"
+            }]
+        }]
+    },
+    "code": 200
+}

@@ -1,0 +1,545 @@
+/*禁止选中*/
+.sunset-unselect{
+  moz-user-select: -moz-none;
+  -moz-user-select: none;
+  -o-user-select:none;
+  -khtml-user-select:none;
+  -webkit-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+}
+.cateyes-viewer-container{
+  /*background: #454545;*/
+  background: 
+}
+.cateyes-viewer-container .cateyes-viewer-header{
+  position: absolute;
+  height: 9px;
+  left: 2px;
+  right: 2px;
+  z-index: 10;
+}
+.cateyes-viewer{
+  position: absolute;
+  top: 9px;
+  left: 0px;
+  right: 0px;
+  bottom: 1px;
+  overflow: hidden;
+  background: #000;
+  border: 1px solid rgb(79,79,79);
+
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
+}
+.cateyes-viewer-container .cateyes-viewer-multi-wrap{
+  border: 2px dashed rgb(79,79,79);
+}
+.cateyes-viewer-container.active .cateyes-viewer-multi-wrap{
+  border: 2px dashed #09c;
+}
+/**
+ * 检索器
+ */
+ .cateyes-searcher-progressbar{
+ 	position: absolute;
+ 	bottom: 3px;
+ 	width: 100%;
+ 	height: 3px;
+ 	background: transparent;
+ 	
+ }
+ .cateyes-searcher-progress{
+ 	height: 100%;
+ 	width: 0%;
+ 	background: #99cc33;
+ 	transition: all .2s;
+ 	-moz-transition: all .2s;
+ 	-webkit-transition: all .2s;
+ 	-o-transition: all .2s;
+ }
+ .cateyes-searcher-slider{
+ 	position: absolute;
+  z-index: 3;
+  width: 3px;
+  top:-3px;
+  bottom: -5px;
+  background: #FF0;
+  border-right: 1px solid #454545;
+  border-bottom: 1px solid #454545;
+}
+.cateyes-mark-fragment{
+  position: absolute;
+  display:inline-block;
+  width: 3px;
+  height: 5px;
+  margin-top: 0px;
+  top:0px;
+  bottom:1px;
+  z-index: 2;
+}
+.cateyes-mark-fragment.marked{
+  background: #FF9900;
+}
+
+/**快照*/
+.cateyes-snapshoot-box{
+  position: absolute;
+  top:0px;
+  left:0px;
+  right:0px;
+  bottom:0px;
+  z-index: 9999;
+  background: rgba(0,0,0,0.55);
+}
+.cateyes-snapshoot-tools{
+  position: absolute;
+  bottom:100px;
+  left: 50%;
+  transform:translate(-50%,0);
+}
+.cateyes-snapshoot-box button {
+  margin:5px;
+  border-radius:4px;
+  background:#ffffff;
+  cursor:pointer;
+  padding:10px 15px;
+  border:1px solid #ccc;
+  background:#137FFF;
+  color:#FFF;
+  font-weight: normal;
+}
+.cateyes-snapshoot-box button:hover {
+  background:#3399ff;
+}
+
+.cateyes-snapshoot-box img{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  -moz-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+
+/*插件：四角信息*/
+.cateyes-plugin-quadrangleinfo{
+ position: absolute;
+ color: #ff9c00;
+ z-index: 10;
+ font-size: 14px;
+ padding: 5px;
+ font-family: "Droid Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+.cateyes-plugin-quadrangleinfo li{
+ padding-bottom:1px;
+}
+
+/*插件：播放控制器*/
+.cateyes-plugin-playcontrol{
+  position: absolute;
+  z-index: 1000;
+  background-color: yellow;
+  font-size: 0px;
+  color: #666;
+  background: #333;
+  padding-right: 5px;
+  top: 40px;
+  left: 40px;
+  height: 30px;
+  border: 1px solid #555;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+  opacity: 0;
+  -webkit-transform: translate(0px,-100%);
+  -moz-transform: translate(0px,-100%);
+  transform: translate(0px,-100%);
+}
+.cateyes-plugin-playcontrol.show{
+  opacity: 1;
+  -webkit-transform: translate(0,0);
+  -moz-transform: translate(0,0);
+  transform: translate(0,0);
+}
+.cateyes-plugin-playcontrol li{
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 20px;
+  margin-left: 5px;
+  text-align: center;
+  display: inline-block;
+  color: #ababab;
+  font-family: Pacifico;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.cateyes-plugin-playcontrol li:hover{
+  color: #99cc33;
+}
+.cateyes-plugin-playcontrol-fps{
+  width: auto !important;
+  font-size: 12px !important;
+  line-height: 30px !important;
+}
+.cateyes-plugin-swipecontrol{
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  width: 151px;
+  height: 40px;
+  z-index: 100;
+  margin-left: -100px;
+}
+.cateyes-plugin-swipecontrol li{
+  display: inline-block;
+  width: 50px;
+  height:40px;
+  font-size: 20px;
+  color: #FFF;
+  background: rgba(50,50,50,0.6);
+  line-height: 40px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 2px;
+}
+.cateyes-plugin-swipecontrol li:active{
+  background: rgba(0,153,204,0.6);
+}
+.cateyes-plugin-swipecontrol li:first-child{
+  margin-right: 50px;
+}
+/*插件：同步浏览锁*/
+.cateyes-plugin-browselock{
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  right: 4px;
+  top: 70px;
+  margin-top: -14px;
+  border-radius: 2px;
+  text-align: center;
+  line-height: 22px;
+  z-index: 10;
+  background: #565656;
+  cursor: pointer;
+}
+.cateyes-plugin-browselock i{
+  display: inline-block;
+  width: 30px;
+  height:30px;
+  margin-top: 1px;
+  background-image: url(../images/tools-icon.png);
+  background-repeat: no-repeat;
+  background-position: center -90px;
+}
+.cateyes-plugin-browselock.active{
+  background: #09c;
+}
+.cateyes-plugin-browselock.active i{
+  background-position: center -60px;
+}
+
+.cateyes-plugin-keyimagemarker{
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  right: 2px;
+  top: 35%;
+  margin-top: -14px;
+  border-radius: 1px;
+  text-align: center;
+  line-height: 24px;
+  z-index: 10;
+  color: #121212;
+  font-size: 16px;
+  background-color: #343434;
+  cursor: pointer;
+}
+.cateyes-plugin-keyimagemarker.active{
+  background-color: #09c;
+  color: #FFF;
+}
+
+/*全屏插件*/
+.cateyes-plugin-fullscreen{
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  right: 4px;
+  top: 25px;
+  margin-top: -14px;
+  border-radius: 2px;
+  text-align: center;
+  line-height: 22px;
+  z-index: 10;
+  background: #565656;
+  cursor: pointer;
+}
+.cateyes-plugin-fullscreen i{
+  display: inline-block;
+  width: 30px;
+  height:30px;
+  margin-top: 1px;
+  background-image: url(../images/tools-icon.png);
+  background-repeat: no-repeat;
+  background-position: center 0px;
+}
+.cateyes-plugin-fullscreen.active i{
+  background-position: center -30px;
+}
+
+.cateyes-plugin-keyimagemarker{
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  right: 2px;
+  top: 35%;
+  margin-top: -14px;
+  border-radius: 1px;
+  text-align: center;
+  line-height: 24px;
+  z-index: 10;
+  color: #121212;
+  font-size: 16px;
+  background-color: #343434;
+  cursor: pointer;
+}
+.cateyes-plugin-keyimagemarker.active{
+  background-color: #09c;
+  color: #FFF;
+}
+
+/*插件：关键帧标记器*/
+
+.cateyes-plugin-keyimage{
+  position: absolute;
+  z-index: 1000;
+  background-color: yellow;
+  font-size: 0px;
+  color: #666;
+  background: #333;
+  top: 40px;
+  left: 40px;
+  height: 35px;
+  border: 1px solid #555;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+  opacity: 0;
+  -webkit-transform: translate(0px,-100%);
+  -moz-transform: translate(0px,-100%);
+  transform: translate(0px,-100%);
+  border-radius: 2px;
+}
+.cateyes-plugin-keyimage.show{
+  opacity: 1;
+  -webkit-transform: translate(0,0);
+  -moz-transform: translate(0,0);
+  transform: translate(0,0);
+}
+.cateyes-plugin-keyimage li{
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  font-size: 20px;
+  text-align: center;
+  display: inline-block;
+  color: #ababab;
+  font-family: Pacifico;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+  vertical-align: top;
+  cursor: pointer;
+}
+.cateyes-plugin-keyimage li:hover{
+  background: #232323;
+}
+.keyimage-line{
+  display: inline-block;
+  background: #4A4A4A;
+  width: 1px;
+  height: 100%;
+}
+.cateyes-plugin-keyimage .icon-keyimage{
+  width: 25px;
+  height: 25px;
+  margin-top: 6px;
+  display: inline-block;
+  background-image: url(../images/keyimage-icon.png);
+  background-repeat: no-repeat;
+}
+.icon-keyimage-single .icon-keyimage{
+  background-position: 0px 0px;
+}
+.icon-keyimage-single .icon-keyimage.active{
+  background-position: 0px -31px;
+}
+.icon-keyimage-rangestart .icon-keyimage{
+  background-position: -25px 0px;
+}
+.icon-keyimage-rangestart .icon-keyimage.active{
+  background-position: -25px -31px;
+}
+.icon-keyimage-rangeend .icon-keyimage{
+  background-position: -50px 0px;
+}
+.icon-keyimage-rangeend .icon-keyimage.active{
+  background-position: -50px -31px;
+}
+.icon-keyimage-close .icon-keyimage{
+  background-position: -74px 0px;
+}
+.icon-keyimage-close .icon-keyimage.active{
+  background-position: -74px -31px;
+}
+/*关键影像条*/
+.cateyes-keyimage-progress{
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  z-index: 1;
+}
+.cateyes-keyingimage-progress{
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  z-index: 1;
+}
+/*关键影像汇总盒*/
+.cateyes-plugin-keyimage-box{
+  width:270px;
+  height:220px;
+  position: absolute;
+  right:0px;
+  bottom:0px;
+  background: #4D4D4D;
+  border:3px solid #323232;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+  transform: translate(50%);
+  opacity: 0;
+}
+.cateyes-plugin-keyimage-box.show{
+  opacity: 1;
+  -webkit-transform: translate(0,0);
+  -moz-transform: translate(0,0);
+  transform: translate(0,0);
+}
+.keyimage-max-tip{
+  position: absolute;
+  width: 160px;
+  background: #FF4800;
+  bottom: -50px;
+  left: -2px;
+  color:#fff;
+  font-size: 14px;
+  padding: 10px;
+  border-radius: 5px;
+  -webkit-transition: all 1s;
+  -moz-transition: all 1s;
+  transition: all 1s;
+  text-align: center;
+  opacity: 0;
+}
+.keyimage-max-tip.show{
+  opacity: 1;
+}
+.keyimage-max-tip:after{
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: -16px;
+  width: 0px;
+  height: 0px;
+  border-style: solid;
+  border-width: 8px;
+  border-color: transparent transparent #FF4800 transparent;
+}
+.keyimage-box-head{
+  height: 30px;
+  color: #fff;
+  font-size: 14px;
+  line-height: 30px;
+  margin: 0px 5px;
+  border-bottom: 1px solid #3a3a3a;
+}
+.keyimage-box-head button{
+  background: #FE5339;
+  border: none;
+  color: #FFF;
+  padding: 3px 5px;
+  border-radius: 2px;
+  float: right;
+  margin-top: 5px;
+  cursor: pointer;
+}
+.keyimage-box-head button:hover{
+  background: #B73926;
+}
+.cateyes-plugin-keyimage-box li{
+  color: #FFF;
+  font-size: 14px;
+  padding: 10px;
+  color: #FFAD25;
+  font-family: 微软雅黑;
+}
+.cateyes-plugin-keyimage-box li button{
+  border: none;
+  color: #fff;
+  background: #949693;
+  border-radius: 2px;
+  float: right;
+  cursor: pointer;
+  font-family: cursive;
+}
+.cateyes-plugin-keyimage-box li button:hover{
+  background: #787878;
+}
+.cateyes-plugin-keyimage-box ul{
+  height: 190px;
+  overflow: auto;
+}
+
+/*loading*/
+.cateyes-loading-container{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99999;
+}
+.cateyes-loading-container .cateyes-loading-bg{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #3a3f51;
+  z-index:1;
+  opacity: 0.5;
+}
+.cateyes-loading-container .cateyes-loading-msg{
+  border: 2px solid #09c;
+  background-color: #FFF;
+  padding: 20px;
+  z-index: 2;
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  -webkit-transform: translate(-50%,0);
+  transform: translate(-50%,0);
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+}

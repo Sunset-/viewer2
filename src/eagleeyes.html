@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="renderer" content="webkit">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,user-scalable=yes">
+	<title>豌豆影像-猫眼</title>
+	<style type="text/css"></style>
+	<script>
+		// var windowSize = {
+		// 	width: document.documentElement.clientWidth,
+		// 	height: document.documentElement.clientHeight
+		// };
+		// var Device = {
+		// 	isXs: function () {
+		// 		return windowSize.width < 767;
+		// 	},
+		// 	isSm: function () {
+		// 		return windowSize.width >= 768;
+		// 	},
+		// 	isMd: function () {
+		// 		return windowSize.width >= 992;
+		// 	},
+		// 	isLg: function () {
+		// 		return windowSize.width >= 1200;
+		// 	}
+		// };
+		// if (Device.isXs()) {
+		// 	location.href = location.href.replace('cateyes.html','cateyes-phone.html');
+		// }
+	</script>
+	<link rel="stylesheet" type="text/css" href="/eagleeyes/css/reset.css" />
+	<link rel="stylesheet" type="text/css" href="/eagleeyes/css/app.css" />
+	<link rel="stylesheet" type="text/css" href="/eagleeyes/css/cateyes.css" />
+	<link rel="stylesheet" type="text/css" href="/eagleeyes/ext/FontAwesome/css/font-awesome.min.css" />
+	<link rel="stylesheet" type="text/css" href="/eagleeyes/ext/Jquery/jquery.mCustomScrollbar.min.css" />
+</head>
+
+<body class="absoluto-container">
+	<div class="absoluto-container">
+		<!-- 顶部工具栏 -->
+		<div class="header">
+			<img src="/eagleeyes/images/logo-1.png" style="float:left;margin:15px 10px 0px 10px;" />
+			<ul class="header-toolbar header-toolbar-main"></ul>
+		</div>
+		<div class="main-container absoluto-container" style="top:60px;">
+			<!-- 左侧栏 -->
+			<div class="absoluto-container left-side-nav">
+				<!-- 影像列表 -->
+				<div class="left-side-studys absoluto-container" onselectstart="return false" ondragstart="return false" onbeforecopy="return false"
+				    oncopy=document.selection.empty() onselect=document.selection.empty()></div>
+				<!-- 工具栏 -->
+				<div class="left-side-toolbar absoluto-container">
+					<div class="left-toolbar-top"></div>
+					<ul class="left-side-toolbar-wrap"></ul>
+					<div class="left-side-trigger"></div>
+				</div>
+			</div>
+			<!-- 内容主体 -->
+			<div id="major" class="major cateyes-major absoluto-container" onselectstart="return false" ondragstart="return false" onbeforecopy="return false"
+			    oncopy=document.selection.empty() onselect=document.selection.empty()>
+				<div class="cateyes-major-content absoluto-container"></div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		/******************************浏览器检测***********************************/
+		(function () {
+			try {
+				document.createElement("canvas").getContext("2d");
+				return true;
+			} catch (e) {
+				location = "/remind.html";
+				return false;
+			}
+		})();
+	</script>
+
+	<!-- scripts -->
+	<!-- jquery -->
+	<script type="text/javascript" src="/eagleeyes/ext/Jquery/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="/eagleeyes/ext/Jquery/jquery.mousewheel.min.js"></script>
+	<script type="text/javascript" src="/eagleeyes/ext/Jquery/jquery.mCustomScrollbar.min.js"></script>
+	<!-- cateyes -->
+	<script type="text/javascript" src="/eagleeyes/eagleeyes.script.js"></script>
+</body>
+
+</html>

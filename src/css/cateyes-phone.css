@@ -1,0 +1,13 @@
+.cateyes-viewer-header{
+	height: 0px !important;
+	overflow: hidden !important;
+}
+.cateyes-viewer-container.active .cateyes-viewer{
+  border: none !important;
+}
+.cateyes-viewer{
+	top:0px !important;
+}
+.cateyes-plugin-playcontrol{
+	display: none !important;
+}

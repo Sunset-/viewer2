@@ -1,0 +1,127 @@
+/**
+ * 组件安装
+ * npm install gulp-util gulp-minify-html gulp-processhtml gulp-replace gulp-imagemin gulp-ruby-sass gulp-minify-css gulp-jshint gulp-uglify gulp-rename gulp-concat gulp-clean gulp-livereload tiny-lr gulp-rev gulp-rev-collector gulp-run-sequence --save-dev
+ */
+
+var fs = require('fs');
+
+var gulp = require('gulp'),
+	minifyhtml = require('gulp-minify-html'), //html压缩
+	processhtml = require('gulp-processhtml'), //html压缩
+	imagemin = require('gulp-imagemin'), //图片压缩
+	minifycss = require('gulp-minify-css'), //css压缩
+	uglify = require('gulp-uglify'), //js压缩
+	rename = require('gulp-rename'), //重命名
+	concat = require('gulp-concat'), //合并文件
+	clean = require('gulp-clean'), //清空文件夹
+	replace = require('gulp-replace'),
+	rev = require('gulp-rev'),
+	revCollector = require('gulp-rev-collector'),
+	runSequence = require('gulp-run-sequence'),
+	zip = require('gulp-zip'),
+	moment = require('moment');
+
+var buildDir = 'cateyes';
+var buildZip = buildDir + '.' + moment().format('YYYYMMDD') + '.zip';
+
+var VERSION = '1.0.0';
+
+var deleteFolderRecursive = function(path) {
+	var files = [];
+	if (fs.existsSync(path)) {
+		files = fs.readdirSync(path);
+		files.forEach(function(file, index) {
+			var curPath = path + "/" + file;
+			if (fs.statSync(curPath).isDirectory()) { // recurse
+				deleteFolderRecursive(curPath);
+			} else { // delete file
+				fs.unlinkSync(curPath);
+			}
+		});
+		fs.rmdirSync(path);
+	}
+};
+
+//clean
+gulp.task('clean', function() {
+	deleteFolderRecursive('./'+buildDir);
+});
+
+
+//js
+gulp.task('js', function() {
+	//ext
+	gulp.src('src/ext/**/*.*').pipe(gulp.dest(buildDir+'/ext'));
+
+	gulp.src(['src/js/**/*.js', '!src/js/cateyes/*.js'])
+		.pipe(uglify())
+		.pipe(rev())
+		.pipe(gulp.dest(buildDir+'/js'))
+		.pipe(rev.manifest())
+		.pipe(gulp.dest(buildDir+'/js'));
+
+	//cateyes//
+	gulp.src('src/js/cateyes/*.js')
+		.pipe(concat('cateyes.min.js'))
+		.pipe(uglify())
+		.pipe(rev())
+		.pipe(gulp.dest(buildDir+'/js/cateyes'))
+		.pipe(rev.manifest())
+		.pipe(gulp.dest(buildDir+'/js/cateyes'));
+});
+
+//css
+gulp.task('css', function() {
+	gulp.src('src/css/**/*.css').pipe(minifycss()).pipe(gulp.dest(buildDir+'/css'));
+});
+
+
+//image
+gulp.task('image', function() {
+	gulp.src('src/images/**/*').pipe(imagemin()).pipe(gulp.dest(buildDir+'/images'));
+});
+
+
+//html
+gulp.task('html-copy', function() {
+	return gulp.src('src/*.html').pipe(gulp.dest(buildDir));
+});
+gulp.task('html', ['html-copy'], function() {
+	return gulp.src([buildDir+'/cateyes.html',buildDir+'/cateyes-phone.html'])
+		.pipe(processhtml())
+		.pipe(gulp.dest(buildDir));
+});
+
+//version
+gulp.task("version-all", ['html'], function() {
+	return gulp.src([buildDir+'/js/rev-manifest.json', buildDir+'/*.html'])
+		.pipe(revCollector({
+			replaceReved: true
+		}))
+		.pipe(gulp.dest(buildDir));
+})
+gulp.task("version", ['version-all'], function() {
+	return gulp.src([buildDir+'/js/cateyes/rev-manifest.json', buildDir+'/*.html'])
+		.pipe(revCollector({
+			replaceReved: true
+		}))
+		.pipe(gulp.dest(buildDir));
+});
+
+//zip
+gulp.task('zip',['version'], function() {
+	gulp.src([buildDir + '*/**/*'])
+		.pipe(zip(buildZip))
+		.pipe(gulp.dest('build'));
+});
+
+
+
+gulp.task('default', function() {
+	runSequence('clean', ['js', 'image', 'css'], 'version');
+	//gulp.start('clean', 'js', 'image', 'css', 'html', 'replace');
+});
+
+gulp.task('build', function() {
+	runSequence('clean', ['js', 'image', 'css'],'zip');
+});

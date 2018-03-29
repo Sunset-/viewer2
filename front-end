@@ -1,0 +1,249 @@
+#!/bin/bash
+
+DAY=`date +%Y%m%d`
+
+DEV_APP_URL=root@192.168.0.148:/home/peaimage/ui2017
+
+PRODUCT_APP_URL=root@117.34.72.19:/home/peaimage/ui
+
+ALI_APP_URL=root@114.55.144.113:/home/peaimage/ui2017
+
+rootPATH=/home/peaimage/ui2017
+
+
+zipAPP()
+{
+    echo "------------------zip -r $1.$DAY.zip  $1--------------" >>$1.log
+
+    if [ -d "./$1" ]; then
+        zip -q -r "$1.$DAY.zip"  $1 && echo "--zip $1 success"
+    fi
+    
+}
+unZipApp() {
+    echo "------------------zip -r $1.$DAY.zip  $1--------------" >>$1.log
+    if [ -f "$1.$DAY.zip" ];then
+        if [ -d $1 ];then
+            cleanApp $1
+        fi
+        unzip -q "$1.$DAY.zip"&& echo "--unzip $1.$DAY.zip success"
+    fi
+}
+
+cleanZip(){
+    echo "---------------- rm $1.$DAY.zip --------------------" >> $1.log
+    if [ -f "$1.$DAY.zip" ];then
+        rm -rf "$1.$DAY.zip" && echo "--rm -rf $1.$DAY.zip"
+    fi
+}
+cleanApp(){
+    echo "------------------rm -rf $2/$1----------------------" >>$1.log
+    if [ -d "$1" ];then
+        rm -rf $1 && echo "--rm -rf $1"
+    fi
+}
+
+
+scpZip(){   
+    echo "---------------- scp "$1.$DAY.zip"  --------------------" >>$1.log
+    
+    if [ -f "$1.$DAY.zip" ];then
+        if [ "$2" = "PRODUCT" ];then 
+            scp -r "$1.$DAY.zip" $PRODUCT_APP_URL && echo "--scp $1.$DAY.zip PRODUCT"
+        elif [ "$2" = "ALI" ];then
+        scp -r "$1.$DAY.zip" $ALI_APP_URL && echo "--scp $1.$DAY.zip ALI"
+    else 
+            scp -r "$1.$DAY.zip" $DEV_APP_URL && echo "--scp $1.DAT.zip DEV"
+        fi
+    fi
+}
+
+
+public(){
+    echo "----------------pulic "$DAY"------------------------" >>$public.log
+
+    if [ "$2" = "PRODUCT" ];then 
+        scp -r "$1" $PRODUCT_APP_URL
+    elif [ "$2" = "ALI" ];then
+    scp -r "$1" $ALI_APP_URL
+    else 
+        scp -r "$1" $DEV_APP_URL
+    fi
+}
+
+send(){
+    echo "---------------send $1 $2----------------------------" >> $1.log
+    zipAPP $1 $2
+    scpZip $1 $2
+    cleanZip $1 $2
+}
+
+bak(){
+    echo "---------------- bak "$1.$DAY"  --------------------" >> $1.log
+    if [ ! -d "./bak" ];then
+        mkdir bak
+    fi
+
+    if [ -d "$1" ];then
+        tar -zcf "bak/$1.$DAY.tar.gz" $1 &&  echo "--tar -c bak/$1.DAT.tar.gz" 
+    fi
+}
+
+update(){
+    echo "---------------- update "$1.$DAY"  --------------------" >> $1.log   
+    unZipApp $1
+    cleanZip $1
+}
+
+back(){
+    echo "---------------- back "$1.$DAY"  --------------------" >>$1.log   
+    if [ -d "./$1" ];then
+        cleanApp $1
+    fi
+
+    if [ -f "./bak/$1.$DAY.tar.gz" ];then
+
+        if [ ! -d "./$1" ];then
+            mkdir $1
+        fi
+        tar -zxf "./bak/$1.$DAY.tar.gz" $1 && echo "--tar -x bak/$1.$DAY.tar.gz"
+    fi
+}
+
+cleanlog(){
+    rm ./app.log
+    rm ./management.log
+    rm ./cateyes.log
+    touch app.log
+    touch management.log
+    touch cateyes.log
+    echo "------------------clean "$DAY"-------------------------------">> clean.log
+}
+
+reload(){
+
+    if [ "$1" == "PRODUCT" ];then
+        scp -r "front-end" $PRODUCT_APP_URL && echo "--scp front-end product"
+    elif [ "$1" == "ALI" ];then
+        scp -r "front-end" $ALI_APP_URL && echo "--scp front-end ali"
+    else 
+        scp -r "front-end" $DEV_APP_URL && echo "--scp front-end dev"
+    fi
+    
+
+}
+case $1 in
+    'send')
+        
+        if [ $3 == 'all' ];then
+            send 'app' $2
+            send 'management' $2
+            send 'cateyes' $2  
+            echo "success send all $2"
+        elif [ $3 != 'all' ];then
+            send $3 $2
+            echo "success send $3 $2"   
+        fi 
+
+
+        ;;
+    'bak')
+    
+        if [ $2 == 'all' ];then
+            bak 'app'
+            bak 'management'
+            bak 'cateyes'
+            echo "success bak all"
+        elif [ $2 != 'all' ];then
+            bak $2
+            echo "success bak $2"
+        fi
+        ;;
+
+    'back')
+        if [ $2 == 'all' ];then
+            back 'app'
+            back 'management'
+            back 'cateyes'
+            echo "success back all"
+        elif [ $2 != 'all' ];then
+            back $2
+            echo "success back $2"
+        fi
+        ;;
+    'update')
+
+        if [ $2 == 'all' ];then
+            update 'app'
+            update 'management'
+            update 'cateyes'
+            echo "success update all"
+        elif [ $2 != 'all' ];then
+            update $2
+            echo "success update $2"
+        fi
+        ;;
+    'cleanlog')
+        
+        cleanlog
+        echo "success cleanlog"
+        ;;
+
+    'public')
+        
+        if [ $3 == 'all' ];then
+            public 'app' $2
+            public 'management' $2
+            public 'cateyes' $2
+            echo "success public all $2"
+        elif [ $3 != 'all' ]; then
+            public $3 $2
+
+            echo "success public $3 $2"
+        fi
+        ;;
+
+    'reload')
+        reload $2
+        ;;
+    *)
+        echo "--------------front-end 前端部署脚本----------------------"
+        echo "front-end send DEV all               :发送安装包到测试环境"
+        echo "front-end send DEV app            :发送app安装包到测试环境"
+        echo "front-end send DEV management     :发送management安装包到测试环境"
+        echo "front-end send DEV cateyes        :发送cateyes安装包到测试环境"
+        echo "front-end send PRODUCT            :发送安装包到正式环境"
+        echo "front-end send PRODUCT app        :发送app安装包到正式环境"
+        echo "front-end send PRODUCT management :发送management安装包到正式环境"
+        echo "front-end send PRODUCT cateyes    :发送cateyes安装包到正式环境"
+        echo ""
+        echo "front-end bak all                    :备份线上环境"
+        echo "front-end bak app                 :备份线上app"
+        echo "front-end bak management          :备份线上management"
+        echo "front-end bak cateyes             :备份线上cateyes"
+        echo ""
+        echo "front-end back all                   :备份还原所有"
+        echo "front-end back app                :备份还原app"
+        echo "front-end back management         :备份还原management"
+        echo "front-end back cateyes            :备份还原cateyes"
+        echo ""
+        echo "front-end update all                :所有新安装包替换旧的版本"
+        echo "front-end update app              :app新安装包替换旧的版本"
+        echo "front-end update management       :management新安装包替换旧的版本"
+        echo "front-end update cateyes          :cateyes新安装包替换旧的版本"
+        echo ""
+        echo "front-end cleanlog                :清除日志"
+        echo ""
+        echo "内部测试版工具,出啥问题自己负责,欢迎提bug,谢谢使用,祝您工作愉快"
+        echo "部署步骤:send => bak => update"
+        echo "如有异常请及时使用back命令回退当前版本,以下操作直接替换文件,在未备份的情况下严禁使用"
+        echo "front-end public DEV all             :直接发布到测试"
+        echo "front-end public DEV app          :直接发布到测试"
+        echo "front-end public DEV management   :直接发布到测试"
+        echo "front-end public DEV cateyes      :直接发布到测试"
+        echo "front-end public PRODUCT all         :直接发布到正式"
+        echo "front-end public PRODUCT app      :直接发布到正式"
+        echo "front-end public PRODUCT management    :直接发布到正式"
+        echo "front-end public PRODUCT cateyes  :直接发布到正式"
+        ;;
+esac
